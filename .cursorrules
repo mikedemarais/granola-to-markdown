@@ -1,0 +1,72 @@
+# Granola Meetings Exporter
+
+This is a utility that exports Granola meeting notes and transcripts to Markdown files. It reads the Granola desktop app's cache file and creates formatted markdown documents for each meeting.
+
+## Key Files
+
+- `index.ts`: The main script that handles finding, parsing, and exporting meetings
+- `README.md`: Documentation and usage instructions
+- `package.json`: Project dependencies and scripts
+
+## Important Guidelines
+
+- This is a Bun + TypeScript codebase, use Bun instead of node/npm when possible
+- When possible use built-in Bun APIs instead of importing new dependencies
+- Maintain the simple standalone nature of the script
+- Follow existing patterns for error handling and logging
+- Update the README.md documentation when adding new command-line options
+
+## Granola Cache Structure
+
+The cache-v3.json file has the following hierarchical structure:
+
+```
+cache-v3.json
+├── cache (JSON string that needs parsing)
+    ├── state
+    │   ├── documents (keyed by UUID)
+    │   │   ├── [doc-id]
+    │   │   │   ├── id: String
+    │   │   │   ├── created_at: Timestamp
+    │   │   │   ├── title: String
+    │   │   │   ├── notes_plain: String
+    │   │   │   ├── notes_markdown: String
+    │   │   │   └── google_calendar_event: Object
+    │   ├── transcripts (keyed by document ID)
+    │   │   ├── [doc-id]
+    │   │   │   └── entries: Array
+    │   ├── meetingsMetadata (keyed by document ID)
+    │   │   ├── [doc-id]
+    │   │   │   ├── creator: Object
+    │   │   │   ├── attendees: Array
+    └── version: Number
+```
+
+Key relationships:
+- Documents are the central objects, containing meeting details
+- Transcripts are keyed by document ID (1:1 relationship)
+- MeetingsMetadata are also keyed by document ID (1:1 relationship)
+- Attendees can come from either meetingsMetadata.attendees or google_calendar_event.attendees
+- Transcripts should be sorted by sequence_number for proper chronological order
+
+## Code Style Guidelines
+
+- Use modern TypeScript features
+- Provide clear error messages and helpful console output
+- Maintain type definitions for the Granola data structures
+
+## Testing
+
+Test the script with various scenarios:
+- Different date ranges
+- Handling missing or corrupted cache file
+- Processing meetings with and without transcripts
+- Various output directory configurations
+
+## Linting
+
+Run the type checker before committing changes:
+
+```bash
+bun typecheck
+```

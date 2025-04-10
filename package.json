@@ -1,0 +1,31 @@
+{
+    "name": "granola-to-markdown",
+    "version": "1.0.0",
+    "description": "A utility that exports Granola meeting notes and transcripts to Markdown files",
+    "type": "module",
+    "main": "index.ts",
+    "bin": {
+      "granola-to-markdown": "index.ts"
+    },
+    "scripts": {
+      "start": "bun index.ts",
+      "export": "bun index.ts",
+      "export:force": "bun index.ts --force",
+      "typecheck": "tsc --noEmit",
+      "test": "echo \"No tests yet\" && exit 0"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+      "commander": "^11.1.0",
+      "ora": "^7.0.1"
+    },
+    "devDependencies": {
+      "@types/node": "^20.9.0",
+      "bun-types": "latest",
+      "typescript": "^5.0.0"
+    },
+    "engines": {
+      "bun": ">=1.0.0"
+    }
+  }
